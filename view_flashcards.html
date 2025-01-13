@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Flashcards</title>
+  <style>
+      .flashcard {
+          width: 200px;
+          height: 300px;
+          margin: 10px;
+          position: relative;
+          perspective: 1000px;
+      }
+      .flashcard-inner {
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+          transition: transform 0.6s;
+      }
+      .flashcard-front,
+      .flashcard-back {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          backface-visibility: hidden;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          font-size: 20px;
+      }
+      .flashcard-back {
+          transform: rotateY(180deg);
+      }
+      .flip-card {
+          cursor: pointer;
+      }
+      .controls {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 20px;
+      }
+      .page-number {
+          font-size: 16px;
+      }
+  </style>
+</head>
+<body>
+
+<main>
+  <div class="container">
+    <h1>Flashcards</h1>
+    <div id="flashcard-container"></div>
+    <div class="controls">
+      <button id="prev-btn">&#8592; Previous</button>
+      <span id="page-number" class="page-number"></span>
+      <button id="next-btn">Next &#8594;</button>
+    </div>
+  </div>
+</main>
+
+<script src="view_flashcards.js"></script>
+</body>
+</html>

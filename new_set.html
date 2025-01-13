@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Create Flashcards</title>
+</head>
+<body>
+
+<main>
+  <header>
+    <div class="container">
+      <h1>Create Flashcards</h1>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div id="create-set">
+        <label for="set-name">Pack Name</label>
+        <input type="text" id="set-name" placeholder="Enter flashcard pack name" maxlength="100">
+
+        <h2>Flashcards</h2>
+
+        <div id="flashcard-container">
+          <div class="flashcard" id="flashcard-1">
+            <label for="question-1">Flashcard 1 - Front</label>
+            <textarea id="question-1" placeholder="Front of card">Front of card</textarea>
+            <label for="answer-1">Back</label>
+            <textarea id="answer-1" placeholder="Back of card">Back of card</textarea>
+            <span class="delete-btn" onclick="deleteFlashcard(this)">&#10005;</span>
+          </div>
+          <div class="flashcard" id="flashcard-2">
+            <label for="question-2">Flashcard 2 - Front</label>
+            <textarea id="question-2" placeholder="Front of card">Front of card</textarea>
+            <label for="answer-2">Back</label>
+            <textarea id="answer-2" placeholder="Back of card">Back of card</textarea>
+            <span class="delete-btn" onclick="deleteFlashcard(this)">&#10005;</span>
+          </div>
+        </div> <!-- Konec divu flashcard-container -->
+
+        <button id="add-card">+ Add Flashcard</button>
+        <br>
+        <button id="save-set">Save Pack</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="new_set.js"></script>
+</main>
+
+</body>
+</html>

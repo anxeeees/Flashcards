@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/png" href="flashcard.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Flashcards</title>
+</head>
+<body>
+
+<main>
+
+  <header>
+    <div class="container">
+      <div id="header">
+        <h1>Flashcards</h1>
+        <div>
+          <button id="show_card_box">Create new set</button>
+          <button id="ai">Create with AI</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section>
+    <div class="container">
+      <div id="create_card">
+        <h1>Create Flashcard</h1>
+        <label for="question">Question</label>
+        <textarea id="question" maxlength="280"></textarea>
+        <label for="answer" maxlength="280">Answer</label>
+        <br>
+        <textarea id="answer"></textarea>
+        <div>
+          <button id="save_card">Save</button> <button id="close_card_box">Close</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="container">
+    <h2>Create Flashcards</h2>
+    <div class="create-buttons">
+      <div class="button blue-button">
+       Create with AI
+      </div>
+      <div class="button green-button">
+        Create Manually
+      </div>
+      <div class="button blue-button">
+        Import from JSON
+      </div>
+    </div>
+
+    <div class="recent-flashcards">
+      <p>Recent Sets</p>
+      <button class="new-set-btn" onclick="window.location.href='new_set.html'">+ New Set</button>
+    </div>
+    <div class="sets-container"></div>
+  </div>
+
+
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
