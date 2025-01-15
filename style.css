@@ -43,7 +43,13 @@ header{background-color: #fff;}
 
 #header button{
     font-family: inherit;
-    border: 1px solid red;
+}
+
+#header button:active,
+#header button:focus {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
 }
 
 #create_card{
@@ -298,3 +304,6 @@ header{background-color: #fff;}
 .page-number {
     font-size: 16px;
 }
+
+
+

@@ -44,14 +44,12 @@ window.onload = function() {
             pageNumber.textContent = `${currentIndex + 1} / ${filteredCards.length}`;
         }
 
+
         // Funkce pro smazání kartičky
         function deleteCard() {
             // Pokud je v setu pouze jedna kartička
             if (flashcards.length === 1) {
-                const confirmationPopup = confirm("There is only one card left in the set. Deleting it will remove the entire set. Are you sure you want to proceed?");
-                if (confirmationPopup) {
-                    deleteSet(); // Zavoláme funkci pro smazání celého setu
-                }
+                alert("You cannot delete the last card. The minimum number of cards in a set is 1.");
             } else {
                 // Pokud je více než jedna kartička
                 const confirmationPopup = confirm("Are you sure you want to delete this card?");
@@ -78,8 +76,9 @@ window.onload = function() {
             }
         }
 
-        // Funkce pro smazání celého setu
-        function deleteSet() {
+
+        // Tlačítko pro smazání celého setu
+        document.querySelector('.delete-set-btn').addEventListener('click', () => {
             const confirmationPopup = confirm("Are you sure you want to delete this entire set?");
             if (confirmationPopup) {
                 // Smaže celý set
@@ -88,15 +87,23 @@ window.onload = function() {
                 // Uložíme změny zpět do localStorage
                 localStorage.setItem('flashcardSets', JSON.stringify(allSets));
 
-                window.location.href = 'index.html'; // Příklad přesměrování na stránku index.html (můžete upravit)
+                // Přesměrování na hlavní stránku (index.html)
+                window.location.href = 'index.html'; // Tato stránka by měla být vaše hlavní stránka
             }
-        }
+        });
 
         // Funkce pro přiřazení kategorie
         function assignCategory(category) {
             filteredCards = flashcards.filter(card => card.category === category);
-            currentIndex = 0; // Reset index for the selected category
-            showCard(currentIndex);
+            currentIndex = 0; // Reset index pro vybranou kategorii
+
+            if (filteredCards.length === 0) {
+                const flashcardContainer = document.getElementById('flashcard-container');
+                flashcardContainer.innerHTML = '<p>No cards in this category</p>'; // Zobrazí zprávu, pokud nejsou kartičky v kategorii
+                document.getElementById('page-number').textContent = ''; // Skrytí čísla stránky
+            } else {
+                showCard(currentIndex); // Pokud jsou kartičky, zobrazíme první
+            }
         }
 
         // Funkce pro přidání/změnu kategorie k kartičce

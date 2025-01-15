@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speech to Text</title>
+</head>
+<body>
+
+<h1>Convert Speech to Text</h1>
+
+<button id="start-recording">Start Recording</button>
+<button id="stop-recording" disabled>Stop Recording</button>
+
+<div>
+  <h3>Transcription:</h3>
+  <p id="transcription"></p>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    // Global variables
+    let mediaRecorder;
+    let audioChunks = [];
+    let audioBlob;
+
+    // Start recording audio
+    document.getElementById("start-recording").addEventListener("click", () => {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+                mediaRecorder.start();
+
+                mediaRecorder.ondataavailable = event => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    audioChunks = [];
+
+                    // Convert the audio to text
+                    transcribeAudio(audioBlob);
+                };
+
+                document.getElementById("stop-recording").disabled = false;
+            }).catch(error => {
+            console.error("Error accessing audio stream: ", error);
+        });
+    });
+
+    // Stop recording and send the audio to the API
+    document.getElementById("stop-recording").addEventListener("click", () => {
+        mediaRecorder.stop();
+        document.getElementById("start-recording").disabled = true;
+    });
+
+    // Send audio data to Google Cloud Speech-to-Text API
+    function transcribeAudio(audioBlob) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const audioData = reader.result.split(",")[1]; // Base64 encoding of the audio file
+
+            // Prepare the data to send to API
+            const requestData = {
+                audio: {
+                    content: audioData
+                },
+                config: {
+                    encoding: "WEBM_OPUS",  // Adjusted for WebM audio format
+                    sampleRateHertz: 16000,  // Adjust if needed based on your audio setup
+                    languageCode: "en-US"  // Adjust the language as necessary
+                }
+            };
+
+            // Send the request using AJAX
+            $.ajax({
+                url: 'https://speech.googleapis.com/v1/speech:recognize?key=AIzaSyAeL9tOH9gT1lZLvHQVUuh_CpROrFiCV0U',  // Replace with your API key
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: function(response) {
+                    if (response.results && response.results.length > 0) {
+                        const transcription = response.results[0].alternatives[0].transcript;
+                        document.getElementById("transcription").innerText = transcription;
+                    } else {
+                        document.getElementById("transcription").innerText = "No speech recognized.";
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error: ', error);
+                    document.getElementById("transcription").innerText = "Failed to transcribe audio.";
+                }
+            });
+        };
+        reader.readAsDataURL(audioBlob); // Read the audio data
+    }
+</script>
+
+</body>
+</html>
